@@ -1,27 +1,27 @@
-setwd("C:/Users/hdung/Desktop/Getting and Cleaning Data/UCI HAR Dataset")
+##setwd("C:/GitHub/Getting-and-Cleaning-Data")
 
 ##Load the activity names
-activityLabels <- read.table("./activity_labels.txt")
+activityLabels <- read.table("./UCI HAR Dataset/activity_labels.txt")
 colnames(activityLabels) <- c("ActivityID", "ActivityName")
 #Replace underscore with space so the activity names appear like natural English
 activityLabels$ActivityName <- sub("_", " ", activityLabels$ActivityName)
 
 ##Load the feature names
-features <- read.table("./features.txt")
+features <- read.table("./UCI HAR Dataset/features.txt")
 colnames(features) <- c("FeatureID", "FeatureName")
 #We are only interested in mean and standard deviation features
 interestedFeatures <- grep("[-]mean[(][)]|[-]std[(][)]", features$FeatureName)
 
 ##Load the Test group of volunteers
-testSubjects <- read.table("./test/subject_test.txt")
+testSubjects <- read.table("./UCI HAR Dataset/test/subject_test.txt")
 colnames(testSubjects) <- c("SubjectID")
 
 ##Load the activities from the Test group
-testActivities <- read.table("./test/y_test.txt")
+testActivities <- read.table("./UCI HAR Dataset/test/y_test.txt")
 colnames(testActivities) <- c("ActivityID")
 
 ##Load the data set for the Test group
-testData <- read.table("./test/X_test.txt")
+testData <- read.table("./UCI HAR Dataset/test/X_test.txt")
 colnames(testData) <- features$FeatureName
 #Get the interested features - mean and standard deviation
 interestedTestData <- testData[, interestedFeatures]
@@ -30,15 +30,15 @@ interestedTestData <- testData[, interestedFeatures]
 testDataGroup <- cbind(testSubjects, testActivities, interestedTestData)
 
 ##Load the Training group of volunteers
-trainSubjects <- read.table("./train/subject_train.txt")
+trainSubjects <- read.table("./UCI HAR Dataset/train/subject_train.txt")
 colnames(trainSubjects) <- c("SubjectID")
 
 ##Load the activities from the Training group
-trainActivities <- read.table("./train/y_train.txt")
+trainActivities <- read.table("./UCI HAR Dataset/train/y_train.txt")
 colnames(trainActivities) <- c("ActivityID")
 
 ##Load the data set for the Training group
-trainData <- read.table("./train/X_train.txt")
+trainData <- read.table("./UCI HAR Dataset/train/X_train.txt")
 colnames(trainData) <- features$FeatureName
 #Get the interested features - mean and standard deviation
 interestedTrainData <- trainData[, interestedFeatures]
@@ -73,6 +73,9 @@ colnames(data) <- sub("-std\\()", "StandardDeviation", colnames(data))
 ##Sort data
 data <- data[order(data$SubjectID, data$ActivityName), ]
 
+##Write first merged data set
+write.table(data, file = "./MergedDataSet.txt", sep = ",", row.names = FALSE)
+
 ##Create a new tidy data set with the average of each variable for each activity and each subject
 ##library(data.table)
 ##DT <- data.table(data)
@@ -93,3 +96,5 @@ rownames(dataMean) <- 1:nrow(dataMean)
 colnames(dataMean) <- sub("Time", "AverageOfTime", colnames(dataMean))
 colnames(dataMean) <- sub("Frequency", "AverageOfFrequency", colnames(dataMean))
 
+##write second tidy data set
+write.table(dataMean, "./TidyDataSet.txt", sep = ",", row.names = FALSE)
