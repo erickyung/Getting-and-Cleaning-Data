@@ -205,12 +205,12 @@ The variables are renamed to pascal naming convention because it's easy to read,
 
 The raw data set were partitioned into two sets named 'test' and 'train'. Each set has 3 files:
 
-- subject_test.txt : a vector of subjects who participated in the experiments
-- y_test.txt : a vector of activities performed by the subjects
-- X_test.txt : a data table of values produced by the accelerometer and gyroscope 3-axial raw signals
+* subject_test.txt : a vector of subjects who participated in the experiments
+* y_test.txt : a vector of activities performed by the subjects
+* X_test.txt : a data table of values produced by the accelerometer and gyroscope 3-axial raw signals
 
-- The 'test' set can be found in './UCI HAR Dataset/test' directory.
-- The 'train' set can be found in './UCI HAR Dataset/train' directory.
+* The 'test' set can be found in './UCI HAR Dataset/test' directory.
+* The 'train' set can be found in './UCI HAR Dataset/train' directory.
 
 ###Steps to produce c
 
